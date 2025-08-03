@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Button Demo - ChiefOnboarding</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        
+        .demo-section {
+            margin-bottom: 40px;
+        }
+        
+        .demo-section h2 {
+            color: #444;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .button-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .button-label {
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .event-log {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            height: 150px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+        
+        .log-entry.new {
+            background: #e3f2fd;
+            animation: highlight 1s ease-out;
+        }
+        
+        @keyframes highlight {
+            from { background: #2196f3; color: white; }
+            to { background: #e3f2fd; color: inherit; }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>Animated Button Web Component</h1>
+        <p class="subtitle">Interactive demo showcasing the animated button component for ChiefOnboarding</p>
+        
+        <div class="demo-section">
+            <h2>Variants</h2>
+            <div class="button-grid">
+                <div class="button-item">
+                    <div class="button-label">Primary</div>
+                    <animated-button text="Primary Button" variant="primary"></animated-button>
+                </div>
+                <div class="button-item">
+                    <div class="button-label">Secondary</div>
+                    <animated-button text="Secondary Button" variant="secondary"></animated-button>
+                </div>
+                <div class="button-item">
+                    <div class="button-label">Success</div>
+                    <animated-button text="Success Button" variant="success"></animated-button>
+                </div>
+                <div class="button-item">
+                    <div class="button-label">Outline</div>
+                    <animated-button text="Outline Button" variant="outline"></animated-button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Sizes</h2>
+            <div class="button-grid">
+                <div class="button-item">
+                    <div class="button-label">Small</div>
+                    <animated-button text="Small" size="small"></animated-button>
+                </div>
+                <div class="button-item">
+                    <div class="button-label">Medium (Default)</div>
+                    <animated-button text="Medium" size="medium"></animated-button>
+                </div>
+                <div class="button-item">
+                    <div class="button-label">Large</div>
+                    <animated-button text="Large" size="large"></animated-button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>States</h2>
+            <div class="button-grid">
+                <div class="button-item">
+                    <div class="button-label">Normal</div>
+                    <animated-button text="Click Me"></animated-button>
+                </div>
+                <div class="button-item">
+                    <div class="button-label">Disabled</div>
+                    <animated-button text="Disabled" disabled></animated-button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Event Log</h2>
+            <div class="event-log" id="eventLog">
+                <div class="log-entry">Click any button to see events...</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="animated-button.js"></script>
+    <script>
+        // Event logging
+        const eventLog = document.getElementById('eventLog');
+        let eventCount = 0;
+        
+        function logEvent(message) {
+            eventCount++;
+            const entry = document.createElement('div');
+            entry.className = 'log-entry new';
+            entry.textContent = `${eventCount}. ${new Date().toLocaleTimeString()} - ${message}`;
+            eventLog.insertBefore(entry, eventLog.firstChild);
+            
+            // Remove highlight after animation
+            setTimeout(() => entry.classList.remove('new'), 1000);
+            
+            // Keep only last 20 entries
+            if (eventLog.children.length > 20) {
+                eventLog.removeChild(eventLog.lastChild);
+            }
+        }
+        
+        // Listen for button events
+        document.addEventListener('animated-button-click', (e) => {
+            logEvent(`Button clicked: "${e.detail.text}" (${e.detail.variant})`);
+        });
+        
+        // Log component load
+        document.addEventListener('DOMContentLoaded', () => {
+            logEvent('Animated Button components loaded successfully');
+        });
+    </script>
+</body>
+</html>

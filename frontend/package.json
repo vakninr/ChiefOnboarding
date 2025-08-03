@@ -1,0 +1,22 @@
+{
+  "name": "chiefonboarding-web-components",
+  "version": "1.0.0",
+  "description": "Web components for ChiefOnboarding",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
+    "serve": "serve -s dist -p 3000"
+  },
+  "keywords": ["web-components", "animated-button", "chiefonboarding"],
+  "author": "ChiefOnboarding Team",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "rollup": "^4.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "serve": "^14.0.0"
+  }
+}
